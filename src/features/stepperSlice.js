@@ -1,13 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    steps: ["Profile", "Work", "Eduction", "Skills", "Interests", "Preview"],
+    steps: ["Profile", "Skills", "Certifications", "Work", "Eduction", "Projects", "Preview"],
     activeStep: 0,
     prevSteps: [],
     header: [
         {
             title: "What’s the best way for the employers to contact you?",
             subTitle: "We suggest including an email and a phone number.",
+        },
+        {
+            title: "Tell us about your skills",
+            subTitle: "Enter your soft skills, hard skills, technical skills, etc.",
+        },
+        {
+            title: "Tell us about your interests",
+            subTitle: "Mention the things that you are interested in.",
         },
         {
             title: "Tell us about your work experience",
@@ -19,12 +27,9 @@ const initialState = {
                 "Give details about your education so far, even if you are a current student or did not graduate.",
         },
         {
-            title: "Tell us about your skills",
-            subTitle: "Enter your soft skills, hard skills, technical skills, etc.",
-        },
-        {
-            title: "Tell us about your interests",
-            subTitle: "Mention the things that you are interested in.",
+            title: "Tell us about your education ",
+            subTitle:
+                "Give details about your education so far, even if you are a current student or did not graduate.",
         },
         {
             title: "",

@@ -1,16 +1,16 @@
 import React from "react";
-import "../css/style.css";
-import "../css/reset.css";
+import "../../css/style.css";
+import "../../css/reset.css";
 import { FieldArray, useFormik, FormikProvider } from "formik";
 import * as Yup from "yup";
-import * as msg from "../utilities/validationMessages";
+import * as msg from "../../utilities/validationMessages";
 import ExperienceForm from "./ExperienceForm";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { nextStep, prevStep } from "../features/stepperSlice";
-import { saveWork } from "../features/workSlice";
+import { nextStep, prevStep } from "../../features/stepperSlice";
+import { saveWork } from "../../features/workSlice";
 
 const EmployeeExperience = () => {
 const { work } = useSelector((store) => store);
@@ -49,8 +49,7 @@ const formik = useFormik({
         country: Yup.object().nullable().required("Required!"),
         description: Yup.string()
             .min(20, msg.minDescription)
-            .required("Required!")
-            .max(255, msg.maxDescription),
+            .required("Required!"),
         startDate: Yup.date()
             .nullable()
             .required("Required!")

@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
-import { Box, Button, Input, InputLabel } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import { prevStep } from "../features/stepperSlice";
+import React, {useRef, useState} from "react";
+import {Box, Button, Input, InputLabel} from "@mui/material";
+import {useSelector, useDispatch} from "react-redux";
+import {prevStep} from "../features/stepperSlice";
 import jsPDF from "jspdf";
 import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
 import html2canvas from "html2canvas";
@@ -23,74 +23,40 @@ const Resume = () => {
             width: "796.8px",
             margin: "auto",
             boxShadow: "0px 0px 10px 1px #959595",
-        },
-        resumeRow: {
-            display: "flex",
-            width: "100%",
-        },
-        sidebar: {
-            background: sidebarBG,
-            width: "20%",
-            minHeight: "1123px",
-        },
-        main: {
-            width: "66%",
-            padding: "3rem 1rem",
-        },
-        sidebarUl: {
-            color: sidebarTxt,
-            margin: "2rem 0",
-        },
-        headingDecorator: {
+        }, resumeRow: {
+            display: "flex", width: "100%",
+        }, sidebar: {
+            background: sidebarBG, width: "25%", minHeight: "1123px",
+        }, main: {
+            width: "70%", padding: "1rem",
+        }, sidebarUl: {
+            color: sidebarTxt, margin: "2rem 0",
+        }, headingDecorator: {
             position: "relative",
-        },
-        profile: {
-            marginTop: "3rem",
-            padding: "0 15px",
-        },
-        sidebarProfilePuL: {
-            wordBreak: "break-word",
-            fontSize: "1rem",
-            fontWeight: "400",
-        },
-        profileContentColor: {
+        }, profile: {
+            marginTop: "3rem", padding: "0 15px",
+        }, sidebarProfilePuL: {
+            wordBreak: "break-word", fontSize: "1rem", fontWeight: "400",
+        }, profileContentColor: {
             color: sidebarTxt,
-        },
-        canidateName: {
-            alignItems: "center",
-            justifyContent: "center",
-            display: "flex",
-        },
-        contactSection: {
+        }, canidateName: {
+            alignItems: "center", justifyContent: "center", display: "flex",
+        }, contactSection: {
             margin: "2rem 0",
-        },
-        jobTitle: {
-            fontSize: "1.5rem",
-            color: "#204D8B",
-            fontWeight: "600",
-            lineHeight: "1rem",
-        },
-        dFlex: {
-            display: "flex",
-            alignItems: "center",
-        },
-        spaceBetween: {
+        }, jobTitle: {
+            fontSize: "1.4rem", color: "#204D8B", fontWeight: "600", lineHeight: "1rem",
+        }, dFlex: {
+            display: "flex", alignItems: "center",
+        }, spaceBetween: {
             justifyContent: "space-between",
-        },
-        headingDecoratorSmall: {
+        }, headingDecoratorSmall: {
             position: "relative",
-        },
-        icons: {
-            width: "25px",
-            marginTop: "20px",
-        },
-        margin0: { margin: "0px" },
-        uniName: { marginBottom: "5px", fontWeight: "bold" },
+        }, icons: {
+            width: "25px", marginTop: "20px",
+        }, margin0: {margin: "0px"}, uniName: {marginBottom: "5px", fontWeight: "bold"},
     };
 
-    const { info, work, education, skills, interests } = useSelector(
-        (store) => store
-    );
+    const {info, work, education, skills, projects, certifications} = useSelector((store) => store);
 
     const dispatch = useDispatch();
     const cvTemplateRef = useRef(null);
@@ -133,21 +99,29 @@ const Resume = () => {
     // populate experience function code here
     const populateExperience = (experience) => {
         if (experience.organization) {
-            return (
-                <>
-                    <span style={styles.jobTitle}>{experience.title}</span>
-                    <div>
-                        <p>
-                            {experience.organization}, {experience.country.label}
-                        </p>
-                        <p>
-                            {formatDate(experience.startDate)} –{" "}
-                            {formatDate(experience.endDate)}
-                        </p>
-                    </div>
-                    <p>{experience.description}</p>
-                </>
-            );
+            return (<>
+                <span style={styles.jobTitle}>{experience.title}</span>
+                <div>
+                    <p>
+                        {experience.organization}, {experience.country.label}
+                    </p>
+                    <p>
+                        {formatDate(experience.startDate)} –{" "}
+                        {formatDate(experience.endDate)}
+                    </p>
+                </div>
+                <p style={{overflowWrap: "break-word"}}>{experience.description}</p>
+            </>);
+        } else {
+            return "";
+        }
+    };
+    const populateProject = (project) => {
+        if (project.title) {
+            return (<>
+                <span style={styles.jobTitle}>{project.title}</span>
+                <p>{project.description}</p>
+            </>);
         } else {
             return "";
         }
@@ -157,232 +131,213 @@ const Resume = () => {
     const populateEducation = (education) => {
         if (education.degree) {
             return (
-                <li>
-                    <div style={{ ...styles.dFlex, ...styles.spaceBetween }}>
-                        <p style={styles.uniName}>{education.school}</p>
-
-                        <p style={styles.uniName}>{formatDate(education.date)}</p>
-                    </div>
+                <div style={{...styles.dFlex, ...styles.spaceBetween}}>
+                    <p style={styles.margin0}>{education.institute}({education.gpa})</p>
+                    <p style={styles.margin0}>{formatDate(education.date)}</p>
                     <p style={styles.margin0}>
                         {education.degree} in {education.study}
                     </p>
-                </li>
-            );
+                </div>
+        )
+            ;
         } else {
             return "";
         }
     };
 
-    return (
-        <>
-            {/*final html template here */}
-            <div style={styles.container}>
-                <div style={styles.resumeRow} ref={cvTemplateRef}>
-                    <div style={styles.sidebar}>
-                        <div style={styles.profile}>
-                            <div style={styles.canidateName}>
-                                <h2 style={{ ...styles.profileContentColor, ...styles.dFlex }}>
-                                    {/* write first name and last name here */info.firstName + " " + info.lastName}
-                                </h2>
-                            </div>
-                            <div style={styles.contactSection}>
-                                <img style={styles.icons} src="envelope.svg" alt="icon" />
-                                <p
-                                    style={{
-                                        ...styles.profileContentColor,
-                                        ...styles.sidebarProfilePuL,
-                                        ...styles.margin0,
-                                    }}
-                                >
-                                    {/* populate email here */info.email}
-                                </p>
+    return (<>
+        {/*final html template here */}
+        <div style={styles.container}>
+            <div style={styles.resumeRow} ref={cvTemplateRef}>
+                <div style={styles.sidebar}>
+                    <div style={styles.profile}>
+                        <div style={styles.canidateName}>
+                            <h1 style={{...styles.profileContentColor, ...styles.dFlex}}>
+                                {/* write first name and last name here */"Zhuofan" + " " + "Zhang"}
+                            </h1>
+                        </div>
+                        <div>
+                            <img style={styles.icons} src="envelope.svg" alt="icon"/>
+                            <p
+                                style={{
+                                    ...styles.profileContentColor, ...styles.sidebarProfilePuL, ...styles.margin0,
+                                }}
+                            >
+                                {/* populate email here */"zhangzhuofan2019@163.com"}
+                            </p>
 
-                                <img style={styles.icons} src="smartphone.svg" alt="icon" />
-                                <p
-                                    style={{
-                                        ...styles.profileContentColor,
-                                        ...styles.sidebarProfilePuL,
-                                        ...styles.margin0,
-                                    }}
-                                >
-                                    {/* populate phone here */info.phone}
-                                </p>
+                            <img style={styles.icons} src="smartphone.svg" alt="icon"/>
+                            <p
+                                style={{
+                                    ...styles.profileContentColor, ...styles.sidebarProfilePuL, ...styles.margin0,
+                                }}
+                            >
+                                {/* populate phone here */13162188552}
+                            </p>
 
-                                <img style={styles.icons} src="location.svg" alt="icon" />
-                                <p
-                                    style={{
-                                        ...styles.profileContentColor,
-                                        ...styles.sidebarProfilePuL,
-                                        ...styles.margin0,
-                                    }}
-                                >
-                                    {/* populate city and country here */info.country ? info.city + ", " + info.country.label : ""}
-                                </p>
-                            </div>
-                            <div className="skill-section">
-                                <h3
-                                    style={{
-                                        ...styles.profileContentColor,
-                                        ...styles.headingDecoratorSmall,
-                                    }}
-                                >
-                                    SKILLS
-                                </h3>
-                                <ul
-                                    style={{ ...styles.profileContentColor, ...styles.sidebarUl }}
-                                >
-                                    {/* populate skills here */skills.skills && skills.skills.map((skill) => <li>{skill}</li>)}
-                                </ul>
-                            </div>
-                            <div className="interest-section">
-                                <h3
-                                    style={{
-                                        ...styles.profileContentColor,
-                                        ...styles.headingDecoratorSmall,
-                                    }}
-                                >
-                                    INTERESTS
-                                </h3>
-                                <ul
-                                    style={{ ...styles.profileContentColor, ...styles.sidebarUl }}
-                                >
-                                    {/* populate interests here */interests.interests && interests.interests.map((interest) => (<li>{interest}</li>))}
-                                </ul>
-                            </div>
+                            <img style={styles.icons} src="location.svg" alt="icon"/>
+                            <p
+                                style={{
+                                    ...styles.profileContentColor, ...styles.sidebarProfilePuL, ...styles.margin0,
+                                }}
+                            >
+                                {/* populate city and country here */`Dublin, Ireland`}
+                            </p>
+                        </div>
+                        <div className="skill-section">
+                            <h3
+                                style={{
+                                    ...styles.profileContentColor, ...styles.headingDecoratorSmall, marginBlockEnd: 0
+                                }}
+                            >
+                                SKILLS
+                            </h3>
+                            <ul
+                                style={{...styles.profileContentColor, ...styles.sidebarUl}}
+                            >
+                                {/* populate skills here */skills.skills && skills.skills.map((skill) =>
+                                    <li>{skill}</li>)}
+                            </ul>
+                        </div>
+                        <div className="certifications-section">
+                            <h3
+                                style={{
+                                    ...styles.profileContentColor, ...styles.headingDecoratorSmall, marginBlockEnd: 0
+                                }}
+                            >
+                                Certifications
+                            </h3>
+                            <ul
+                                style={{...styles.profileContentColor, ...styles.sidebarUl}}
+                            >
+                                {/* populate interests here */certifications.certifications && certifications.certifications.map((interest) => (
+                                    <li>{interest}</li>))}
+                            </ul>
                         </div>
                     </div>
-                    <div style={styles.main}>
-                        <h3>SUMMARY</h3>
-                        <p>{/* summary here */info.summary}</p>
+                </div>
+                <div style={styles.main}>
 
-                        <h3 className="heading-decorator">EXPERIENCE</h3>
-                        {/* map experience here */work.experience && work.experience.map((exp) => populateExperience(exp))}
+                    <h3 className="heading-decorator" style={{marginBlockStart: 0, marginBlockEnd: 0}}>EDUCATION</h3>
+                    <p>{/* map education here */education.education && education.education.map((edu) => populateEducation(edu))}</p>
 
-                        <h3 className="heading-decorator">EDUCATION</h3>
-                        <ul>{/* map education here */education.education && education.education.map((edu) => populateEducation(edu))}</ul>
-                    </div>
+                    <p style={{borderTop: "solid", width: "100%",}}></p>
+                    <h3 className="heading-decorator" style={{marginBlockStart: 0, marginBlockEnd: 0}}>WORK
+                        EXPERIENCE</h3>
+                    {/* map experience here */work.experience && work.experience.map((exp) => populateExperience(exp))}
+
+                    <p style={{borderTop: "solid", width: "100%",}}></p>
+                    <h3 style={{marginBlockStart: 0, marginBlockEnd: 0}}>PROJECTS</h3>
+                    {/* map projects here */projects.project && projects.project.map((prj) => populateProject(prj))}
+
                 </div>
             </div>
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    width: "-webkit-fill-available",
-                    justifyContent: "space-evenly",
-                    pt: 5,
-                }}
+        </div>
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "row",
+                width: "-webkit-fill-available",
+                justifyContent: "space-evenly",
+                pt: 5,
+            }}
+        >
+            <Button
+                color="inherit"
+                onClick={() => dispatch(prevStep())}
+                sx={{mr: 1}}
             >
-                <Button
-                    color="inherit"
-                    onClick={() => dispatch(prevStep())}
-                    sx={{ mr: 1 }}
+                Back
+            </Button>
+
+            <div style={{display: "flex", gap: 10}}>
+                <div
+                    sx={{
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                    }}
                 >
-                    Back
-                </Button>
-
-                <div style={{ display: "flex", gap: 10 }}>
-                    <div
+                    <Button
                         sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
+                            background: "#4951F5", borderRadius: "25px",
                         }}
                     >
-                        <Button
+                        <InputLabel
+                            htmlFor="bg-color"
+                            className="color-lable"
                             sx={{
-                                background: "#4951F5",
-                                borderRadius: "25px",
-                            }}
-                        >
-                            <InputLabel
-                                htmlFor="bg-color"
-                                className="color-lable"
-                                sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    color:"white"
+                                display: "flex", alignItems: "center", color: "white"
 
-                                }}
-                            >
-                                <FormatColorFillIcon sx={{ color: "white" }} />
-                                &nbsp; Sidebar BG Color &nbsp;
-                            </InputLabel>
-                            <Input
-                                type="color"
-                                id="bg-color"
-                                value={sidebarBG}
-                                sx={{
-                                    width: "0px",
-                                    height: "0px",
-                                    border: "0",
-                                }}
-                                onChange={(e) => setSidebarBG(e.target.value)}
-                            />
-                        </Button>
-                    </div>
-                    <div
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                    >
-                        <Button
-                            sx={{
-                                background: "#4951F5",
-                                borderRadius: "25px",
                             }}
                         >
-                            <InputLabel
-                                htmlFor="text-color"
-                                className="color-lable"
-                                sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    color:"white"
-                                }}
-                            >
-                                <FormatColorFillIcon sx={{ color: "white" }} />
-                                &nbsp; Sidebar Text Color &nbsp;
-                            </InputLabel>
-                            <Input
-                                type="color"
-                                id="text-color"
-                                value={sidebarTxt}
-                                sx={{
-                                    width: "0px",
-                                    height: "0px",
-                                    border: "0",
-                                }}
-                                onChange={(e) => setSidebarTxt(e.target.value)}
-                            />
-                        </Button>
-                    </div>
-                </div>
-                {/* Task 16: Add download template here */}
-                <div className="dropdown">
-                    <Button variant="contained" sx={{ background: "#F26D85", mx: 0.5}}>
-                        Download
+                            <FormatColorFillIcon sx={{color: "white"}}/>
+                            &nbsp; Sidebar BG Color &nbsp;
+                        </InputLabel>
+                        <Input
+                            type="color"
+                            id="bg-color"
+                            value={sidebarBG}
+                            sx={{
+                                width: "0px", height: "0px", border: "0",
+                            }}
+                            onChange={(e) => setSidebarBG(e.target.value)}
+                        />
                     </Button>
-                    <div className="dropdown-content">
-                        <a
-                            href="#"
-                            // call handleGeneratePdf function here
-                            onClick={handleGeneratePdf}
-                        >
-                            PDF
-                        </a>
-                        <a
-                            href="#"
-                            // call handleGeneratePng function here
-                            onClick={handleGeneratePng}
-                        >
-                            PNG
-                        </a>
-                    </div>
                 </div>
-            </Box>
-        </>
-    );
+                <div
+                    sx={{
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                    }}
+                >
+                    <Button
+                        sx={{
+                            background: "#4951F5", borderRadius: "25px",
+                        }}
+                    >
+                        <InputLabel
+                            htmlFor="text-color"
+                            className="color-lable"
+                            sx={{
+                                display: "flex", alignItems: "center", color: "white"
+                            }}
+                        >
+                            <FormatColorFillIcon sx={{color: "white"}}/>
+                            &nbsp; Sidebar Text Color &nbsp;
+                        </InputLabel>
+                        <Input
+                            type="color"
+                            id="text-color"
+                            value={sidebarTxt}
+                            sx={{
+                                width: "0px", height: "0px", border: "0",
+                            }}
+                            onChange={(e) => setSidebarTxt(e.target.value)}
+                        />
+                    </Button>
+                </div>
+            </div>
+            {/* Task 16: Add download template here */}
+            <div className="dropdown">
+                <Button variant="contained" sx={{background: "#F26D85", mx: 0.5}}>
+                    Download
+                </Button>
+                <div className="dropdown-content">
+                    <a
+                        href="#"
+                        // call handleGeneratePdf function here
+                        onClick={handleGeneratePdf}
+                    >
+                        PDF
+                    </a>
+                    <a
+                        href="#"
+                        // call handleGeneratePng function here
+                        onClick={handleGeneratePng}
+                    >
+                        PNG
+                    </a>
+                </div>
+            </div>
+        </Box>
+    </>);
 };
 export default Resume;

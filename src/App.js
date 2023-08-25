@@ -4,18 +4,19 @@ import MultiStepper from "./Components/MultiStepper";
 import Container from "@mui/material/Container";
 import ShowTemplate from "./Components/ShowTemplate";
 import EmployeeInfo from "./Components/EmployeeInfo";
-import EmployeeExperience from "./Components/EmployeeExperience";
+import EmployeeExperience from "./Components/experience/EmployeeExperience";
 import EmployeeEducation from "./Components/EmployeeEducation";
 import EmployeeSkills from "./Components/EmployeeSkills";
-import EmployeeInterests from "./Components/EmployeeInterests";
 import Resume from "./Components/Resume";
 import {useSelector} from "react-redux/es/hooks/useSelector";
+import EmployeeProjects from "./Components/projects/EmployeeProjects";
+import EmployeeCertifications from "./Components/EmployeeCertifications";
 
 
 function App() {
 
     // Task 2: retreive steps here
-    const { activeStep } = useSelector((store) => store.stepper);
+    const {activeStep} = useSelector((store) => store.stepper);
 
     // function to render all the froms
     function renderForms(activeStep) {
@@ -25,16 +26,18 @@ function App() {
                 return <EmployeeInfo/>;
             // Task 9: Add employee work case here
             case 1:
-                return <EmployeeExperience/>;
+                return <EmployeeSkills/>;
             // Task 11: Add employee education case here
             case 2:
-                return <EmployeeEducation/>;
+                return <EmployeeCertifications/>;
             // Task 13: Add employee skills case here
             case 3:
-                return <EmployeeSkills/>;
+                return <EmployeeExperience/>;
             // Task 15: Add employee interests case here
             case 4:
-                return <EmployeeInterests/>;
+                return <EmployeeEducation/>;
+            case 5:
+                return <EmployeeProjects/>;
             default:
                 break;
         }
@@ -43,25 +46,23 @@ function App() {
     return (
         <div className="App">
             {/* final template here.*/}
-            <Container label={'margin="none"'} sx={{ mt: 10, mb: 10 }}>
-                <MultiStepper sx={{ mt: 6 }} />
-                {activeStep < 5 ? (
+            <Container label={'margin="none"'} sx={{mt: 10, mb: 10}}>
+                <MultiStepper sx={{mt: 6}}/>
+                {activeStep < 6 ? (
                     <Grid container>
                         <Grid item md={8} lg={8} sm={12}>
                             {renderForms(activeStep)}
                         </Grid>
                         <Grid item md={4} lg={4} sm={12} xs={12}>
-                            <ShowTemplate />
+                            <ShowTemplate/>
                         </Grid>
-
                     </Grid>
                 ) : (
                     <Grid container>
-                        <Resume />
+                        <Resume/>
                     </Grid>
                 )}
             </Container>
-
         </div>
     );
 }

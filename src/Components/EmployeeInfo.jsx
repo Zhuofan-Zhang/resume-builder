@@ -51,10 +51,6 @@ const EmployeeInfo = () => {
                 .max(28, msg.maxCity)
                 .required("Required!"),
             country: Yup.object().nullable().required("Required!"),
-            summary: Yup.string()
-                .min(20, msg.minSummary)
-                .required("Required!")
-                .max(255, msg.maxSummary),
         }),
 
         onSubmit: (values) => {
@@ -161,37 +157,6 @@ const EmployeeInfo = () => {
                             />
                         )}
                         {/* write error message code here */countryError && countryTouch && <p className="error-text">{countryError}</p>}
-
-                    </Grid>
-
-                    <Grid item xs={12} className="item">
-
-                        {/* summary code here */
-                            <InputLabel
-                                shrink
-                                htmlFor="summary"
-                                className="text-input"
-                                sx={{ marginLeft: "1.5rem" }}
-                            >
-                                Summary
-                            </InputLabel>
-                        }
-
-                        {/* write TextField component here */
-                            <TextField
-                                placeholder="Write Your Summary Here"
-                                name="summary"
-                                id="summary"
-                                className=""
-                                type="text"
-                                multiline
-                                rows={3}
-                                fullWidth
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={summaryValues}
-                            />}
-                        {/* write error message code here */summaryError && summaryTouch && <p className="error-text">{summaryError}</p>}
 
                     </Grid>
                 </Grid>}

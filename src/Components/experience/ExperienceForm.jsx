@@ -1,11 +1,11 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
-import InputField from "./InputField";
+import InputField from "../InputField";
 import Typography from "@mui/material/Typography";
-import "../css/style.css";
-import "../css/reset.css";
+import "../../css/style.css";
+import "../../css/reset.css";
 import { Autocomplete, InputLabel, TextField } from "@mui/material";
-import { countriesList } from "../utilities/countriesList";
+import { countriesList } from "../../utilities/countriesList";
 import { getIn } from "formik";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";

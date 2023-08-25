@@ -5,45 +5,45 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { nextStep, prevStep } from "../features/stepperSlice";
-import { saveInterest } from "../features/interestsSlice";
+import { saveCertification } from "../features/certificationsSlice";
 import "../css/style.css";
 
-const EmployeeInterests = () => {
-    const { interests } = useSelector((store) => store);
+const EmployeeCertifications = () => {
+    const { certifications } = useSelector((store) => store);
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: {
-            interests: interests.interests,
+            certifications: certifications.certifications,
         },
         // formik validation here
         validationSchema: Yup.object({
-            interests: Yup.array().of(Yup.string()).min(3).max(7).required("Required!"),
+            certifications: Yup.array().of(Yup.string()).min(3).max(7).required("Required!"),
         }),
         onSubmit: (values) => {
             // save skills code here
             if (formik.isValid) {
-                dispatch(saveInterest(values));
+                dispatch(saveCertification(values));
                 dispatch(nextStep());
             }
         },
     });
     return (
         <div className="skills">
-            <InputLabel className="text-input">Interest</InputLabel>
+            <InputLabel className="text-input">Certifications</InputLabel>
             <TagsInput
                 rows={3}
                 placeHolder="e.g. Reading Books"
                 onChange={(value) => {
-                    formik.setFieldValue("interests", value);
+                    formik.setFieldValue("certifications", value);
                 }}
                 formik={formik}
                 onBlur={formik.handleBlur}
-                value={formik.values.interests}
-                name="Interest"
-                id="Interest"
+                value={formik.values.certifications}
+                name="Certification"
+                id="Certification"
             />
-            {formik.touched.interests && formik.errors.interests && (
-                <p className="error-text">{formik.errors.interests}</p>
+            {formik.touched.certifications && formik.errors.certifications && (
+                <p className="error-text">{formik.errors.certifications}</p>
             )}
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
@@ -68,4 +68,4 @@ const EmployeeInterests = () => {
     );
 };
 
-export default EmployeeInterests;
+export default EmployeeCertifications;
