@@ -23,6 +23,7 @@ const EmployeeEducation = () => {
     // local state for education here
     const employeeEducationForm = {
         institute: "",
+        gpa: "",
         degree: "",
         study: "",
         date: "",
@@ -40,6 +41,8 @@ const EmployeeEducation = () => {
                         .min(3, msg.minSchool)
                         .max(50, msg.maxSchool)
                         .required("Required!"),
+                    gpa: Yup.string()
+                        .required("Required!"),
                     degree: Yup.string()
                         .min(3, msg.minDegree)
                         .max(50, msg.maxDegree)
@@ -55,7 +58,6 @@ const EmployeeEducation = () => {
                             return value?.setHours(0, 0, 0, 0) <= today.setHours(0, 0, 0, 0);
                         })
                         .transform((v) => (v instanceof Date && !isNaN(v) ? v : null))
-
                         .required("Required!"),
                 })
             ),
@@ -119,7 +121,7 @@ const EmployeeEducation = () => {
                                                 />
                                             )}
                                             <form className="form-group">
-                                                <Grid container spacing={4}>
+                                                <Grid container spacing={5}>
                                                     <Grid item xs={6} className="item">
                                                         <InputField
                                                             label="Academic Institute"
@@ -127,6 +129,17 @@ const EmployeeEducation = () => {
                                                             placeholder=" e.g. MIT"
                                                             name={`education[${index}].institute`}
                                                             id="institute"
+                                                            index={index}
+                                                            formik={formik}
+                                                        ></InputField>
+                                                    </Grid>
+                                                    <Grid item xs={6} className="item">
+                                                        <InputField
+                                                            label="Achieved GPA / Overall GPA"
+                                                            type="text"
+                                                            placeholder=" e.g. 3.5/4.0"
+                                                            name={`education[${index}].gpa`}
+                                                            id="gpa"
                                                             index={index}
                                                             formik={formik}
                                                         ></InputField>

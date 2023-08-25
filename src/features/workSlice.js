@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const experience = {
-  title: "aaa",
-  organization: "certifications",
-  city: "Dublin",
-  country: "Ireland",
-  startDate: "01/12/1999",
-  endDate: "01/12/2020",
-  description: "certificationscertificationscertificationscertificationscertificationscertificationscertifications",
+  title: "",
+  organization: "",
+  city: "",
+  country: "",
+  startDate: "",
+  endDate: "",
+  description: "",
 };
 
 const initialState = {

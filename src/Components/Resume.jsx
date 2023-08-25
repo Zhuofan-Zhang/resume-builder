@@ -138,8 +138,8 @@ const Resume = () => {
                         {education.degree} in {education.study}
                     </p>
                 </div>
-        )
-            ;
+            )
+                ;
         } else {
             return "";
         }
@@ -153,7 +153,7 @@ const Resume = () => {
                     <div style={styles.profile}>
                         <div style={styles.canidateName}>
                             <h1 style={{...styles.profileContentColor, ...styles.dFlex}}>
-                                {/* write first name and last name here */"Zhuofan" + " " + "Zhang"}
+                                {/* write first name and last name here */info.firstName + " " + info.lastName}
                             </h1>
                         </div>
                         <div>
@@ -163,7 +163,7 @@ const Resume = () => {
                                     ...styles.profileContentColor, ...styles.sidebarProfilePuL, ...styles.margin0,
                                 }}
                             >
-                                {/* populate email here */"zhangzhuofan2019@163.com"}
+                                {/* populate email here */info.email}
                             </p>
 
                             <img style={styles.icons} src="smartphone.svg" alt="icon"/>
@@ -172,7 +172,7 @@ const Resume = () => {
                                     ...styles.profileContentColor, ...styles.sidebarProfilePuL, ...styles.margin0,
                                 }}
                             >
-                                {/* populate phone here */13162188552}
+                                {/* populate phone here */info.phone}
                             </p>
 
                             <img style={styles.icons} src="location.svg" alt="icon"/>
@@ -181,7 +181,7 @@ const Resume = () => {
                                     ...styles.profileContentColor, ...styles.sidebarProfilePuL, ...styles.margin0,
                                 }}
                             >
-                                {/* populate city and country here */`Dublin, Ireland`}
+                                {/* populate city and country here */info.country ? info.city + ", " + info.country.label : ""}
                             </p>
                         </div>
                         <div className="skill-section">
