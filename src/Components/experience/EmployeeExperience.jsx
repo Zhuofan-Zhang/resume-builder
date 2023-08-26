@@ -39,8 +39,6 @@ const formik = useFormik({
             .max(50, msg.maxTitle)
             .required("Required!"),
         organization: Yup.string()
-            .min(3, msg.minOrganization)
-            .max(50, msg.maxOrganization)
             .required("Required!"),
         city: Yup.string()
             .min(3, msg.minCity)
