@@ -38,18 +38,12 @@ const EmployeeEducation = () => {
             education: Yup.array().of(
                 Yup.object().shape({
                     institute: Yup.string()
-                        .min(3, msg.minSchool)
-                        .max(50, msg.maxSchool)
                         .required("Required!"),
                     gpa: Yup.string()
                         .required("Required!"),
                     degree: Yup.string()
-                        .min(3, msg.minDegree)
-                        .max(50, msg.maxDegree)
                         .required("Required!"),
                     study: Yup.string()
-                        .min(3, msg.minStudy)
-                        .max(50, msg.maxStudy)
                         .required("Required!"),
                     date: Yup.date()
                         .nullable()

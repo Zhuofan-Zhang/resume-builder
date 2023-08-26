@@ -35,18 +35,13 @@ const formik = useFormik({
     work: Yup.array().of(
         Yup.object().shape({
         title: Yup.string()
-            .min(3, msg.minTitle)
-            .max(50, msg.maxTitle)
             .required("Required!"),
         organization: Yup.string()
             .required("Required!"),
         city: Yup.string()
-            .min(3, msg.minCity)
-            .max(28, msg.maxCity)
             .required("Required!"),
         country: Yup.object().nullable().required("Required!"),
         description: Yup.string()
-            .min(20, msg.minDescription)
             .required("Required!"),
         startDate: Yup.date()
             .nullable()

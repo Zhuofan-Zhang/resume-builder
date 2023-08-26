@@ -30,11 +30,8 @@ const EmployeeExperience = () => {
             projects: Yup.array().of(
                 Yup.object().shape({
                     title: Yup.string()
-                        .min(3, msg.minTitle)
-                        .max(50, msg.maxTitle)
                         .required("Required!"),
                     description: Yup.string()
-                        .min(20, msg.minDescription)
                         .required("Required!"),
                 })
             ),

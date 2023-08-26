@@ -35,20 +35,14 @@ const EmployeeInfo = () => {
         // formik validation here
         validationSchema: Yup.object({
             firstName: Yup.string()
-                .min(3, msg.minFname)
-                .max(16, msg.maxFname)
                 .required("Required!"),
             lastName: Yup.string()
-                .min(3, msg.minLname)
-                .max(16, msg.maxLname)
                 .required("Required!"),
             phone: Yup.string()
                 .matches(phoneRegexExp, msg.phone)
                 .required("Required!"),
             email: Yup.string().email(msg.email).required("Required!"),
             city: Yup.string()
-                .min(3, msg.minCity)
-                .max(28, msg.maxCity)
                 .required("Required!"),
             country: Yup.object().nullable().required("Required!"),
         }),
