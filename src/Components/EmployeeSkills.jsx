@@ -18,7 +18,7 @@ export const EmployeeSkills = () => {
         },
         // formik validation here
         validationSchema: Yup.object({
-            skills: Yup.array().of(Yup.string()).min(3).max(7).required("Required!"),
+            skills: Yup.array().of(Yup.string()).required("Required!"),
         }),
         onSubmit: (values) => {
             // save skills code here
